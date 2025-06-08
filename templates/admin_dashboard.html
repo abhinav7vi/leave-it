@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div>
+  <p><strong>Total Users:</strong> {{ users }}</p>
+  <p><strong>Total Products:</strong> {{ products_count }}</p>
+  <p><strong>Total Orders:</strong> {{ orders }}</p>
+  <p><strong>Total Sales:</strong> ₹ {{ sales }}</p>
+</div>
+
+<a href="{{ url_for('add_product') }}" class="btn">Add New Product</a>
+
+<table border="1" cellpadding="5" cellspacing="0" style="width:100%; margin-top:20px;">
+  <thead>
+    <tr>
+      <th>ID</th><th>Name</th><th>Price</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td>{{ p['id'] }}</td>
+      <td>{{ p['name'] }}</td>
+      <td>₹ {{ p['price'] }}</td>
+      <td>
+        <a href="{{ url_for('admin_edit_product', product_id=p['id']) }}">Edit</a> |
+        <a href="{{ url_for('admin_delete_product', product_id=p['id']) }}">Delete</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4">No products found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
